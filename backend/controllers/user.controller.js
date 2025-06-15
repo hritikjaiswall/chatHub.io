@@ -5,20 +5,20 @@ import { ApiError } from '../utils/ApiError.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const generateAccessAndRefreshToken = async (userId) => {
-  try {
-    const user = await User.findById(userId);
-    const accessToken = user.generateAccessToken();
-    const refreshToken = user.generateRefreshToken();
+// const generateAccessAndRefreshToken = async (userId) => {
+//   try {
+//     const user = await User.findById(userId);
+//     const accessToken = user.generateAccessToken();
+//     const refreshToken = user.generateRefreshToken();
 
-    user.refreshToken = refreshToken;
-    await user.save({ validateBeforeSave: false });
+//     user.refreshToken = refreshToken;
+//     await user.save({ validateBeforeSave: false });
 
-    return { accessToken, refreshToken };
-  } catch (error) {
-    throw new ApiError(500, "Error generating tokens");
-  }
-};
+//     return { accessToken, refreshToken };
+//   } catch (error) {
+//     throw new ApiError(500, "Error generating tokens");
+//   }
+// };
 
 const registerUser = asyncHandler(async (req, res) => {
   const { fullName, userName, email, password, confirmPassword, gender } = req.body;
@@ -80,42 +80,85 @@ const loginUser = asyncHandler(async (req, res) => {
   if (!isPasswordCorrect) {
     throw new ApiError(400, 'Incorrect password');
   }
+  const tokenData = {
+            userId: user._id
+        };
 
-  const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id);
-  const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
+  const token = jwt.sign(tokenData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
+  // const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id);
+  // const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
 
   const isProduction = process.env.NODE_ENV === "production";
   const options = {
     httpOnly: true,
-    secure: isProduction,
+    // secure: isProduction,
     sameSite: 'strict',
     maxAge: 1 * 24 * 60 * 60 * 1000
   };
 
   return res
     .status(200)
-    .cookie("accessToken", accessToken, options)
-    .cookie("refreshToken", refreshToken, options)
-    .json(new ApiResponse(200, { user: loggedInUser, accessToken, refreshToken }, "User logged in successfully"));
+    .cookie("token", token, options)
+    // .cookie("refreshToken", refreshToken, options)
+    .json(new ApiResponse(200, { _id: user._id,
+            username: user.username,
+            fullName: user.fullName,
+            profilePhoto: user.profilePhoto}, "User logged in successfully"));
 });
 
-const logoutUser = asyncHandler(async (req, res) => {
-  await User.findByIdAndUpdate(req.user._id, {
-    $set: { refreshToken: undefined }
-  }, { new: true });
+// const logoutUser = asyncHandler(async (req, res) => {
+//   // 🔧 UPDATED: Manually extract token if req.user is missing
+//   const token = req.cookies?.token || req.header("Authorization")?.replace("Bearer ", "");
 
-  const isProduction = process.env.NODE_ENV === "production";
-  const options = {
-    httpOnly: true,
-    secure: isProduction,
-    maxAge: 0
-  };
+//   if (!token) {
+//     // 🔧 UPDATED: Return clear error if token is missing
+//     throw new ApiError(401, "No token provided");
+//   }
 
-  return res
-    .status(200)
-    .clearCookie("accessToken", options)
-    .clearCookie("refreshToken", options)
-    .json(new ApiResponse(200, null, "User logged out successfully"));
+//   let decoded;
+//   try {
+//     // 🔧 UPDATED: Decode manually to get user ID
+//     decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+//   } catch (err) {
+//     throw new ApiError(401, "Invalid or expired token");
+//   }
+
+//   // 🔧 UPDATED: Get user using decoded._id
+//   const user = await User.findById(decoded?._id);
+//   if (!user) {
+//     throw new ApiError(404, "User not found");
+//   }
+
+//   // 🔧 UPDATED: Remove refresh token manually and save
+//   user.refreshToken = undefined;
+//   await user.save({ validateBeforeSave: false });
+
+//   // 🔧 UPDATED: Cookie options setup
+//   const isProduction = process.env.NODE_ENV === "production";
+//   const cookieOptions = {
+//     httpOnly: true,
+//     secure: isProduction,
+//     sameSite: 'strict',
+//     maxAge: 0
+//   };
+
+//   return res
+//     .status(200)
+//     .clearCookie("accessToken", cookieOptions)
+//     .clearCookie("refreshToken", cookieOptions)
+//     .json(new ApiResponse(200, null, "User logged out successfully"));
+// });
+
+const logoutUser = asyncHandler(async(req, res) => {
+    return res.status(200).cookie("token", "", { maxAge: 0 }).json({
+            message: "logged out successfully."
+        })
+})
+
+const getOtherUsers = asyncHandler(async (req, res) => {
+  const loggedInUserId = req.id;
+  const otherUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password -refreshToken");
+  return res.status(200).json(new ApiResponse(200, otherUsers, "Other users fetched successfully"));
 });
 
-export { registerUser, loginUser, logoutUser };
+export { registerUser, loginUser, logoutUser, getOtherUsers };
