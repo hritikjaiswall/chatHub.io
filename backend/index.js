@@ -5,6 +5,10 @@ import userRoute from "./routes/userRoute.js";
 import cookieParser from "cookie-parser";
 import messageRoute from "./routes/message.route.js";
 import cors from "cors";
+import { globalErrorHandler } from "./middleware/errorMiddleware.js";
+
+
+
 dotenv.config({ path: "./.env" });
 
 const app = express()
@@ -18,6 +22,7 @@ const corsOption={
    credentials: true, 
 }
 app.use(cors(corsOption));
+app.use(globalErrorHandler);
 //routes
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/message", messageRoute);
