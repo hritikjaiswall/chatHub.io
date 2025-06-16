@@ -18,3 +18,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.blue-outline {
+  text-shadow:
+    -1px -1px 0 #3b82f6, /* Tailwind blue-500 */
+     1px -1px 0 #3b82f6,
+    -1px  1px 0 #3b82f6,
+     1px  1px 0 #3b82f6;
+}
