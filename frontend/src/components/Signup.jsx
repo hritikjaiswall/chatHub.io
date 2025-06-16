@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+
 function Signup() {
   const [user,setUser] = React.useState({
     fullName: '',
@@ -12,9 +14,20 @@ function Signup() {
   const handleCheckBox = (gender) => {
     setUser({...user, gender})
   }
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
     console.log(user);
+    try {
+      const response = await axios.post('http://localhost:8000/api/v1/user/register', user,{
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
+      });
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
     setUser({fullName: '',
     userName: '',
     email: '',
