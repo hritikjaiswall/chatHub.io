@@ -1,11 +1,13 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import React, { useState } from 'react'
-import axios from 'axios'
+import axios from 'axios' 
+import toaster, { toast } from 'react-hot-toast'
 function Login() {
   const [user, setUser] = useState({
     userName: '',
     password: '',
   })
+  const navigate = useNavigate();
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -17,10 +19,15 @@ function Login() {
         },
         withCredentials: true
         
-      });
+      })
       console.log(res);
+      if(res.data.success){
+        navigate('/');
+        toaster.success(res.data.message);
+      }
     } catch (error) {
-      throw new Error('Login failed',error);
+      toast.error(error.response.data.message);
+      console.error(error);
     }
     setUser({
       userName: '',

@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-
+import { useNavigate } from 'react-router-dom'
+import toaster from 'react-hot-toast'
 function Signup() {
   const [user,setUser] = React.useState({
     fullName: '',
@@ -11,6 +12,7 @@ function Signup() {
     confirmPassword: '',
     gender: ''
   })
+  const navigate = useNavigate();
   const handleCheckBox = (gender) => {
     setUser({...user, gender})
   }
@@ -25,8 +27,17 @@ function Signup() {
         withCredentials: true
       });
       console.log(response);
+      if(response.data.success){
+        navigate('/login');
+        toaster.success(response.data.message);
+      }
     } catch (error) {
       console.error(error);
+      if (error.response && error.response.data) {
+        toaster.error(error.response.data.message || 'SignUp failed');
+      } else {
+        toaster.error('An unexpected error occurred');
+      }
     }
     setUser({fullName: '',
     userName: '',
