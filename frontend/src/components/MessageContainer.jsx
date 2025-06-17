@@ -1,5 +1,6 @@
 import React from 'react'
 import SendInput from './SendInput'
+import Messages from './Messages'
 
 function MessageContainer() {
   return ( 
@@ -18,6 +19,7 @@ function MessageContainer() {
                     </div>
                 </div>
             </div>
+            <Messages />
             <SendInput/>
     </div>
   )
