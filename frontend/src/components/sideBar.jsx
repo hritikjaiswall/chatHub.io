@@ -1,5 +1,6 @@
 import React from 'react'
 import { MdOutlinePersonSearch } from "react-icons/md";
+import OtherUser from './otherUser.jsx';
 
 
 
@@ -13,6 +14,9 @@ function SideBar() {
         </button>
       </form>
       <div className='divider px-2'> </div>
+      <OtherUser />
+       <OtherUser />
+        <OtherUser />
     </div>
   )
 }

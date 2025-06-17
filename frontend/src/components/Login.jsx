@@ -26,11 +26,11 @@ function Login() {
       console.log(res);
       if(res.data.success){
         navigate('/');
-        toaster.success(res.data.message);
+        toaster.success(res?.data?.message|| 'Login successful');
         dispatch(setAuthUser(res.data.data));
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message||'Login failed');
       console.error(error);
     }
     setUser({
