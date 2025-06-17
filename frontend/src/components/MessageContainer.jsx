@@ -1,4 +1,5 @@
 import React from 'react'
+import SendInput from './SendInput'
 
 function MessageContainer() {
   return ( 
@@ -17,6 +18,7 @@ function MessageContainer() {
                     </div>
                 </div>
             </div>
+            <SendInput/>
     </div>
   )
 }
