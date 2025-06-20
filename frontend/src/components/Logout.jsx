@@ -1,9 +1,13 @@
 import React from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setAuthUser } from '../redux/userSlice'
+import toaster from 'react-hot-toast'
 
 function Logout() {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const onClickLogout = () => {
     const logout = async () => {
       try {
@@ -12,8 +16,11 @@ function Logout() {
         })
         if (response.status === 200) {
           console.log('Logout successful')
+          toaster.success(response?.data?.message || 'Logout successful')
+          dispatch(setAuthUser(null))
           navigate('/login') // Redirect to the login page after logout
         } else {
+          toaster.error(response?.data?.message || 'Logout failed')
           console.error('Logout failed')
         }
       } catch (error) {
