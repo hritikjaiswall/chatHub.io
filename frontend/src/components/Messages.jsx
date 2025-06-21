@@ -1,7 +1,10 @@
-import React from 'react'
+import React,{useSelector} from 'react'
 import MessageIndividual from './MessageIndividual'
+import useGetMessages from '../hooks/useGetMessages.jsx'
+
 
 function Messages() {
+ useGetMessages();
   return (
     <div className='flex-1 overflow-y-auto p-4 bg-[#2b4569] rounded-sm'>
       <div className='flex flex-col gap-4'>

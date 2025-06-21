@@ -9,15 +9,17 @@ import OtherUser from "../components/otherUser";
         selectedUser: null
     },
 reducers:{
-    setAuthUser: (state, action) => {
-        state.authUser = action.payload;
-    },
-    setOtherUser: (state, action) => {
-        state.otherUser = action.payload;
-
-}
-}
-})
-export const { setAuthUser, setOtherUser } = userSlice.actions;
+    setAuthUser:(state,action)=>{
+            state.authUser = action.payload;
+        },
+        setOtherUser:(state, action)=>{
+            state.otherUser = action.payload;
+        },
+        setSelectedUser:(state,action)=>{
+            state.selectedUser = action.payload;
+        }
+}}
+)
+export const { setAuthUser, setOtherUser,setSelectedUser } = userSlice.actions;
 export default userSlice.reducer;
 
