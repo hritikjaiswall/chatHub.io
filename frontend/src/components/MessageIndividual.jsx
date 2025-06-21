@@ -1,6 +1,7 @@
 import React from 'react'
 
-function MessageIndividual() {
+function MessageIndividual({message}) {
+    console.log("Message is",message)
     return (
         <div>
             <div className="chat chat-start">
@@ -13,8 +14,9 @@ function MessageIndividual() {
                 </div>
                 <div className="chat-header">
                     <time className="mx-2 text-xs opacity-50">12:42</time>
-
-                <div className="chat-bubble bg-[#0f1927]">It was said that you would, destroy the Sith, not join them.</div>
+                <div className="chat-bubble bg-[#0f1927]">
+                    {message.message}
+                </div>
             </div>
             </div>
         </div>
