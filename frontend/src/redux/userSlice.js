@@ -5,7 +5,8 @@ import OtherUser from "../components/otherUser";
     name: "user",
     initialState: {
         authUser: null,
-        otherUser: null
+        otherUser: null,
+        selectedUser: null
     },
 reducers:{
     setAuthUser: (state, action) => {

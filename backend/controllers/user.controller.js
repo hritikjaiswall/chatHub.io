@@ -51,7 +51,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const profilePhoto = gender === 'male'
     ? `https://avatar.iran.liara.run/public/boy?userName=${userName}`
     : `https://avatar.iran.liara.run/public/girl?userName=${userName}`;
-
+  // const profilePhoto = `https://via.assets.so/movie.png/${userName}`;
   const user = await User.create({
     fullName,
     userName,

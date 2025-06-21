@@ -20,7 +20,7 @@ function Logout() {
           dispatch(setAuthUser(null))
           navigate('/login') // Redirect to the login page after logout
         } else {
-          toaster.error(response?.data?.message || 'Logout failed')
+          toaster.error(response.data.message || 'Logout failed')
           console.error('Logout failed')
         }
       } catch (error) {
