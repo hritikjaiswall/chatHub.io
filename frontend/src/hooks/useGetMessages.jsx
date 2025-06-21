@@ -25,12 +25,15 @@ const useGetMessages = () => {
                      console.log('Messages:', response.data);
                      dispatch(setMessages(response.data)); // 🔧 Dispatching action to store messages
                    } catch (error) {
+                    dispatch(setMessages(null));
                     console.error('Error fetching messages:', error);
                     
                    } // 🔧 Still logs messages, doesn't store
                 }
             } catch (error) {
+
                 console.error('Error fetching messages:', error);
+                 // 🔧 Clear messages on error
                 throw error;
             }
         }
