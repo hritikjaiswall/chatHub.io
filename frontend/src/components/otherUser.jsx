@@ -11,17 +11,22 @@ function OtherUser({ user }) {
   };
 
   // ✅ UPDATED: Log selectedUser after it updates
-//   useEffect(() => {
-//     console.log("Current Selected User in Redux:", selectedUser);
-//   }, [selectedUser]);
+  //   useEffect(() => {
+  //     console.log("Current Selected User in Redux:", selectedUser);
+  //   }, [selectedUser]);
 
   return (
     <div>
-      <div
-        onClick={() => setSelectedUserHandler(user)}
-        className={`${
-          selectedUser?._id === user?._id ? 'bg-[#7989a3]' : '' 
-        } flex gap-2 items-center hover:bg-[#313947] p-2 rounded-md cursor-pointer transition-all duration-200`}
+      <div onClick={() => setSelectedUserHandler(user)}
+        className={`flex gap-2 items-center p-2 rounded-md cursor-pointer transition-all duration-300
+  ${selectedUser?._id === user?._id
+            ? 'bg-[#7989a3] text-white'
+            : 'hover:bg-[#313947] hover:text-white text-gray-300'}
+`}
+      // onClick={() => setSelectedUserHandler(user)}
+      // className={`${
+      //   selectedUser?._id === user?._id ? 'bg-[#7989a3]' : '' 
+      // } flex gap-2 items-center hover:bg-[#313947] hover:text-gray-300 p-2 rounded-md cursor-pointer transition-all duration-200`}
       >
         <div className='avatar online'>
           <div className='w-12 rounded-full'>
