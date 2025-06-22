@@ -18,7 +18,7 @@ function Logout() {
           console.log('Logout successful')
           toaster.success(response?.data?.message || 'Logout successful')
           dispatch(setAuthUser(null))
-          navigate('/login') // Redirect to the login page after logout
+          navigate('/') // Redirect to the login page after logout
         } else {
           toaster.error(response.data.message || 'Logout failed')
           console.error('Logout failed')
