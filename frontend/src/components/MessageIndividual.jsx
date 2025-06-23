@@ -1,22 +1,27 @@
-import React, {useRef} from 'react'
-
+import React, {useEffect, useRef} from 'react'
+import { useSelector } from 'react-redux';
 function MessageIndividual({message}) {
    const scroll = useRef();
-    console.log("Message is",message)
-    
-    
+   const {authUser,selectedUser} = useSelector(store=>store.user);
+   useEffect(() => {
+        scroll.current.scrollIntoView({behavior: "smooth"});
+    }, [message])
+
+
+
     return (
         <div>
-            <div ref={scroll} className="chat chat-start">
+                <div ref={scroll} className={`chat ${authUser?._id === message.senderId? 'chat-end' : 'chat-start'}`}>
                 <div className="chat-image avatar">
-                    <div className="w-10 rounded-full">
-                        <img
-                            alt="Tailwind CSS chat bubble component"
-                            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-                    </div>
-                </div>
-                <div className="chat-header">
-                    <time className="mx-2 text-xs opacity-50">12:42</time>
+                    
+                      <div className="w-10 rounded-full">
+                          <img
+                              alt="User profile"
+                              src={authUser?._id === message.senderId ? authUser.profilePicture : message.senderProfilePicture} />
+                      </div>
+                  </div>
+                  <div className="chat-header">
+    <time className="mx-2 text-xs opacity-50">12:42</time>
                 <div className="chat-bubble bg-[#0f1927]">
                     {message.message}
                 </div>
