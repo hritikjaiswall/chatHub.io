@@ -48,10 +48,12 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  const profilePhoto = gender === 'male'
-    ? `https://avatar.iran.liara.run/public/boy?userName=${userName}`
-    : `https://avatar.iran.liara.run/public/girl?userName=${userName}`;
+  // const profilePhoto = gender === 'male'
+  //   ? `https://avatar.iran.liara.run/public/boy?userName=${userName}`
+  //   : `https://avatar.iran.liara.run/public/girl?userName=${userName}`;
   // const profilePhoto = `https://via.assets.so/movie.png/${userName}`;
+
+    const profilePhoto = `https://robohash.org/${userName}`;
   const user = await User.create({
     fullName,
     userName,
