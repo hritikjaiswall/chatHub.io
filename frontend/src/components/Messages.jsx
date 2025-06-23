@@ -25,11 +25,17 @@ function Messages() {
   }
 
   return (
-    <div className='flex-1 overflow-y-auto p-4 bg-[#2b4569] rounded-sm'>
+    <div className='relative flex-1 overflow-y-auto p-4 bg-[#2b4569] rounded-sm'>
       <div className='flex flex-col gap-4'>
-        {messages.map((message) => (
+        {/* {messages.map((message) => (
           <MessageIndividual key={message._id} message={message} />
-        ))}
+        ))} */}
+        {messages?.map((message) => (
+  message && message._id ? (
+    <MessageIndividual key={message._id} message={message} />
+  ) : null
+))}
+
       </div>
     </div>
   );

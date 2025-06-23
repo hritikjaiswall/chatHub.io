@@ -16,7 +16,7 @@ function SideBar() {
       </form>
       <div className='divider px-2'> </div>
       <OthersUser />
-      <div calssName='mt-2'>
+      <div className='mt-2'>
         <Logout />
     </div>  
     </div>

@@ -1,10 +1,13 @@
-import React from 'react'
+import React, {useRef} from 'react'
 
 function MessageIndividual({message}) {
+   const scroll = useRef();
     console.log("Message is",message)
+    
+    
     return (
         <div>
-            <div className="chat chat-start">
+            <div ref={scroll} className="chat chat-start">
                 <div className="chat-image avatar">
                     <div className="w-10 rounded-full">
                         <img
