@@ -3,9 +3,12 @@ import { IoSend } from "react-icons/io5";
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+
+
 function SendInput() {
   const [message,setMessage]=useState("");
   const dispatch = useDispatch();
+  const {messages}= useSelector(store=>store.message)
   const selectedUser = useSelector(store=>store.user.selectedUser)
   const onSubmitHandler = async(e) =>{
     e.preventDefault();
@@ -17,6 +20,7 @@ function SendInput() {
 
       });
       console.log(res);
+      dispatch(setMessage([...message,]))
     } catch (error) {
       console.log("Error",error)
     }

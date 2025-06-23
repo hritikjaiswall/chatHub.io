@@ -31,6 +31,7 @@ const sendMessage = asyncHandler(async (req, res) => {
     } else {
         throw new ApiError(500, "Error sending message");
     }
+    console.log(newMessage)
     return res.status(200).json(new ApiResponse(200, "Message sent successfully", {
         conversationId: gotConversation._id,
         message: newMessage
