@@ -5,14 +5,23 @@ import { useSelector } from 'react-redux';
 
 function MessageContainer() {
   const selectedUser = useSelector((store) => store.user.selectedUser);
+  const authUser = useSelector((store) => store.user.authUser);
 
   if (!selectedUser) {
-    return (
-      <div className="flex-1 flex items-center justify-center bg-[#2b4569] text-white text-xl font-semibold rounded-md">
-        Select a user to start chatting 💬
+return (
+  <div className="flex-1 flex flex-col items-center justify-center bg-[#2b4569] text-white text-center rounded-md p-6">
+    
+    <div className="flex flex-col items-center space-y-4">
+      <div className="w-20 h-20 flex items-center justify-center rounded-full bg-[#7989a3] bg-opacity-30 text-4xl shadow-md">
+        👋
       </div>
-    );
-  } 
+      <h2 className="text-2xl font-bold">Hi {authUser?.fullName || 'there'}!</h2>
+      <p className="text-gray-200 text-lg">Select a user to start chatting 💬</p>
+    </div>
+    
+  </div>
+);
+  }
 
   return (
     <div className='md:min-w-[550px] flex flex-col'>
