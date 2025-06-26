@@ -11,7 +11,9 @@ const io = new Server(server, {
     methods: ['GET', 'POST']
   }
 });
-
+const getReceiverSocketId = (receiverId)=>{
+  return userSocketMap[receiverId];
+}
 const userSocketMap = {};
 
 io.on('connection', (socket) => {
@@ -31,4 +33,4 @@ io.on('connection', (socket) => {
   });
 });
 
-export { app, io, server };
+export { app, io, server , getReceiverSocketId};

@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux'; // ✅ FIXED: Correct import
 import MessageIndividual from './MessageIndividual';
-import useGetMessages from '../hooks/useGetMessages.jsx';
+import useGetRealTimeMessage from '../hooks/useGetRealTimeMessage.jsx';
+import useGetMessages from '../hooks/useGetMessages.jsx'; // ✅ If needed in your hook
 
 function Messages() {
   const { selectedUser } = useSelector((store) => store.user); // ✅ If needed in your hook
-  useGetMessages(); // Make sure this internally uses selectedUser if needed
+  useGetMessages(); // ✅ If needed in your hook
+  useGetRealTimeMessage(); // Make sure this internally uses selectedUser if needed
 
   const { messages } = useSelector((store) => store.message);
 
