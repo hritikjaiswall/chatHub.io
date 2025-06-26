@@ -29,7 +29,11 @@ const sendMessage = asyncHandler(async (req, res) => {
         gotConversation.messages.push(newMessage._id);
         await gotConversation.save();
         await newMessage.save()
-        await Promise.all(gotConverstaion.save(),newMessage.save())
+        await Promise.all([
+            gotConversation.save(),
+            newMessage.save()
+        ]);
+
     } else {
         throw new ApiError(500, "Error sending message");
     }
