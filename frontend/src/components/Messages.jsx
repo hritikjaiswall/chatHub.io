@@ -5,7 +5,6 @@ import useGetRealTimeMessage from '../hooks/useGetRealTimeMessage.jsx';
 import useGetMessages from '../hooks/useGetMessages.jsx'; // ✅ If needed in your hook
 
 function Messages() {
-  const { selectedUser } = useSelector((store) => store.user); // ✅ If needed in your hook
   useGetMessages(); // ✅ If needed in your hook
   useGetRealTimeMessage(); // Make sure this internally uses selectedUser if needed
 
