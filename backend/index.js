@@ -1,35 +1,33 @@
-import express from "express"
-import dotenv from "dotenv"
+import express from "express"; // ✅ You NEED this, for express.urlencoded/json
+import dotenv from "dotenv";
 import connectDB from "./config/database.js";
 import userRoute from "./routes/userRoute.js";
 import cookieParser from "cookie-parser";
 import messageRoute from "./routes/message.route.js";
 import cors from "cors";
 import { globalErrorHandler } from "./middleware/errorMiddleware.js";
-
-
+import { app, server } from "./socket/socket.js";
 
 dotenv.config({ path: "./.env" });
 
-const app = express()
-const PORT = process.env.PORT || 8000
-// Middleware
+const PORT = process.env.PORT || 8000;
+
+// ✅ You need express here to use express.urlencoded and express.json
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-const corsOption={
-   origin: 'http://localhost:3000',
-   credentials: true, 
-}
-app.use(cors(corsOption));
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true
+}));
 app.use(globalErrorHandler);
-//routes
+
+// Routes
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/message", messageRoute);
 
-app.listen(PORT, () => {
-    connectDB();
-    console.log(`Environment: ${process.env.NODE_ENV}`);
-    console.log(`Database URI: ${process.env.MONGODB_URI}`);
-    console.log(`Server is running on port ${PORT}`);
+// Start server
+server.listen(PORT, () => {
+  connectDB();
+  console.log(`Server is running on port ${PORT}`);
 });
