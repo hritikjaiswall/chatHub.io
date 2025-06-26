@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react' // ✅ UPDATED
+import React, { useEffect, useState } from 'react' // ✅ UPDATED
 import { setSelectedUser } from '../redux/userSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
 
 function OtherUser({ user }) {
   const dispatch = useDispatch();
-  const { selectedUser } = useSelector(store => store.user);
-
+  const { selectedUser, onlineUser } = useSelector(store => store.user);
+  const isOnline = onlineUser.includes(user._id);
   const setSelectedUserHandler = (user) => {
     dispatch(setSelectedUser(user));
   };
@@ -28,7 +28,7 @@ function OtherUser({ user }) {
       //   selectedUser?._id === user?._id ? 'bg-[#7989a3]' : '' 
       // } flex gap-2 items-center hover:bg-[#313947] hover:text-gray-300 p-2 rounded-md cursor-pointer transition-all duration-200`}
       >
-        <div className='avatar online'>
+        <div className={`avatar ${isOnline ? 'online': ''}`}>
           <div className='w-12 rounded-full'>
             <img src={user?.profilePhoto} alt="User-Avatar" className='rounded-full w-12 h-12' />
           </div>

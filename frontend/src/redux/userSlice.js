@@ -6,7 +6,8 @@ import OtherUser from "../components/otherUser";
     initialState: {
         authUser: null,
         otherUser: null,
-        selectedUser: null
+        selectedUser: null,
+        onlineUser: null,
     },
 reducers:{
     setAuthUser:(state,action)=>{
@@ -17,9 +18,13 @@ reducers:{
         },
         setSelectedUser:(state,action)=>{
             state.selectedUser = action.payload;
-        }
+        },
+        setOnlineUser:(state,action)=>{
+            state.onlineUser = action.payload;
+        },
+
 }}
 )
-export const { setAuthUser, setOtherUser,setSelectedUser } = userSlice.actions;
+export const { setAuthUser, setOtherUser,setSelectedUser,setOnlineUser} = userSlice.actions;
 export default userSlice.reducer;
 
