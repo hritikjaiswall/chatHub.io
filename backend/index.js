@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: "https://chathub-frontend.vercel.app",
   credentials: true
 }));
 app.use(globalErrorHandler);
