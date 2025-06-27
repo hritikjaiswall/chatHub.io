@@ -7,7 +7,7 @@ import OtherUser from "../components/otherUser";
         authUser: null,
         otherUser: null,
         selectedUser: null,
-        onlineUser: null,
+        onlineUser: [],
     },
 reducers:{
     setAuthUser:(state,action)=>{

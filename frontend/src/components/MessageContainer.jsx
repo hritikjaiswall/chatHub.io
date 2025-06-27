@@ -6,9 +6,11 @@ import { useSelector } from 'react-redux';
 function MessageContainer() {
   const selectedUser = useSelector((store) => store.user.selectedUser);
   const authUser = useSelector((store) => store.user.authUser);
-  const {onlineUsers} = useSelector((store) => store.user);
+  const onlineUsers = useSelector((store) => store.user.onlineUser || []);  // Safe fallback
+
 
   const isOnline = onlineUsers.includes(selectedUser?._id);
+
   if (!selectedUser) {
 return (
   <div className="flex-1 flex flex-col items-center justify-center bg-[#2b4569] text-white text-center rounded-md p-6">

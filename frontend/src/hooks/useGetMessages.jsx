@@ -2,6 +2,7 @@ import React, { useEffect } from 'react' // 🔧 Removed useState
 import axios from 'axios'
 import { useSelector,useDispatch } from 'react-redux'
 import { setMessages } from '../redux/messageSlice'
+import { BASE_URL } from '..';
 
 const useGetMessages = () => {
     const dispatch = useDispatch() // 🔧 Added dispatch
@@ -20,7 +21,7 @@ const useGetMessages = () => {
                      axios.defaults.withCredentials = true;
                      console.log('Fetching messages for user:', selectedUser._id);
                      
-                     const response = await axios.post(`http://localhost:8000/api/v1/message/${selectedUser._id}`);
+                     const response = await axios.post(`${BASE_URL}/api/v1/message/${selectedUser._id}`);
                      
                      console.log('Messages:', response.data);
                      dispatch(setMessages(response.data)); // 🔧 Dispatching action to store messages
