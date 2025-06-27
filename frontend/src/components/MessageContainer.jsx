@@ -6,7 +6,9 @@ import { useSelector } from 'react-redux';
 function MessageContainer() {
   const selectedUser = useSelector((store) => store.user.selectedUser);
   const authUser = useSelector((store) => store.user.authUser);
+  const {onlineUsers} = useSelector((store) => store.user);
 
+  const isOnline = onlineUsers.includes(selectedUser?._id);
   if (!selectedUser) {
 return (
   <div className="flex-1 flex flex-col items-center justify-center bg-[#2b4569] text-white text-center rounded-md p-6">
@@ -26,7 +28,7 @@ return (
   return (
     <div className='md:min-w-[550px] flex flex-col'>
       <div className='flex gap-2 items-center bg-[#2b4569] text-white px-4 py-2 mb-2 rounded-md shadow-md'>
-        <div className='avatar online'>
+        <div className={`avatar ${isOnline ? 'online' : ''}`}>
           <div className='w-12 rounded-full'>
             <img
               src={selectedUser?.profilePhoto || 'https://i.pinimg.com/564x/a5/c1/c8/a5c1c8751214a3241c85406543ed3b86.jpg'}
